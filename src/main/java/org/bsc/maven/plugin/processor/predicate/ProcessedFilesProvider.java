@@ -12,10 +12,10 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class ProcessedFilesProducer {
+public class ProcessedFilesProvider {
     private final String projectBuildDirectory;
 
-    public ProcessedFilesProducer(String projectBuildDirectory) {
+    public ProcessedFilesProvider(String projectBuildDirectory) {
         this.projectBuildDirectory = projectBuildDirectory;
     }
 

@@ -4,10 +4,10 @@ import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CurrentFilesProducer {
+public class CurrentFilesProvider {
     private final List<File> currentSourceFiles;
 
-    public CurrentFilesProducer(List<File> currentSourceFiles) {
+    public CurrentFilesProvider(List<File> currentSourceFiles) {
         this.currentSourceFiles = currentSourceFiles;
     }
 
@@ -16,6 +16,9 @@ public class CurrentFilesProducer {
     }
 
     private FileInfo createFileInfo(File file) {
+        if (!file.exists()) {
+            throw new IllegalStateException("non existing source file: " + file.getAbsolutePath());
+        }
         return new FileInfo(file.getAbsolutePath(), file.lastModified());
     }
 }

@@ -1,18 +1,31 @@
 package org.bsc.maven.plugin.processor.predicate;
 
+import java.io.File;
 import java.util.Objects;
 
 public class FileInfo {
     private final String absolutePath;
     private final long lastModified;
 
-    public FileInfo(String absolutePath, long lastModified) {
+    FileInfo(String absolutePath, long lastModified) {
         this.absolutePath = absolutePath;
         this.lastModified = lastModified;
     }
 
     public static FileInfo of(String absolutePath, long lastModified) {
         return new FileInfo(absolutePath, lastModified);
+    }
+
+    public static  FileInfo of( File aFile ){
+        return new FileInfo(aFile.getAbsolutePath(), aFile.lastModified());
+    }
+
+    public long getLastModified() {
+        return lastModified;
+    }
+
+    public String getAbsolutePath() {
+        return absolutePath;
     }
 
     @Override

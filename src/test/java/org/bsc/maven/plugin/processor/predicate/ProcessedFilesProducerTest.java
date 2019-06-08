@@ -20,21 +20,21 @@ public class ProcessedFilesProducerTest {
 
     @Test( expected = IllegalStateException.class)
     public void shouldReturnNoFilesFromNonExistingDirectory() {
-        ProcessedFilesProducer producer = new ProcessedFilesProducer("non/existing/directory");
+        ProcessedFilesProvider producer = new ProcessedFilesProvider("non/existing/directory");
         producer.readFilesInfo();
         //then exception is thrown (java.lang.IllegalStateException: cannot read listing file content)
     }
 
     @Test( expected = IllegalStateException.class)
     public void shouldReturnNoFilesWhenNoListingExists() throws URISyntaxException {
-        ProcessedFilesProducer producer = new ProcessedFilesProducer(getDirectoryPath("./no_listing_exists"));
+        ProcessedFilesProvider producer = new ProcessedFilesProvider(getDirectoryPath("./no_listing_exists"));
         producer.readFilesInfo();
         //then exception is thrown (java.lang.IllegalStateException: cannot read listing file content)
     }
 
     @Test
     public void shouldReturnNoFilesFromEmptyListing() throws URISyntaxException {
-        ProcessedFilesProducer producer = new ProcessedFilesProducer(getDirectoryPath("./empty_listing_exists"));
+        ProcessedFilesProvider producer = new ProcessedFilesProvider(getDirectoryPath("./empty_listing_exists"));
         List<FileInfo> filesInfo = producer.readFilesInfo();
 
         Assert.assertNotNull(filesInfo);
@@ -43,7 +43,7 @@ public class ProcessedFilesProducerTest {
 
     @Test
     public void shouldReturnOneFileFromListingWithOneEntry() throws URISyntaxException {
-        ProcessedFilesProducer producer = new ProcessedFilesProducer(getDirectoryPath("./one_file_in_listing"));
+        ProcessedFilesProvider producer = new ProcessedFilesProvider(getDirectoryPath("./one_file_in_listing"));
         List<FileInfo> filesInfo = producer.readFilesInfo();
 
         assertThat(filesInfo, notNullValue());
@@ -57,7 +57,7 @@ public class ProcessedFilesProducerTest {
 
     @Test
     public void shouldReturnFilesFromListing() throws URISyntaxException {
-        ProcessedFilesProducer producer = new ProcessedFilesProducer(getDirectoryPath("./files_in_listing"));
+        ProcessedFilesProvider producer = new ProcessedFilesProvider(getDirectoryPath("./files_in_listing"));
         List<FileInfo> filesInfo = producer.readFilesInfo();
 
         assertThat(filesInfo, notNullValue());
@@ -69,14 +69,14 @@ public class ProcessedFilesProducerTest {
 
     @Test( expected = IllegalStateException.class)
     public void shouldReturnNoFilesWhenListingIsCorrupted() throws URISyntaxException {
-        ProcessedFilesProducer producer = new ProcessedFilesProducer(getDirectoryPath("./corrupted_listing"));
+        ProcessedFilesProvider producer = new ProcessedFilesProvider(getDirectoryPath("./corrupted_listing"));
         producer.readFilesInfo();
         //then exception is thrown (java.lang.IllegalStateException: cannot split listing file into key=value map)
     }
 
     @Test( expected = IllegalStateException.class)
     public void shouldReturnNoFilesWhenListingHasCorruptedData() throws URISyntaxException {
-        ProcessedFilesProducer producer = new ProcessedFilesProducer(getDirectoryPath("./corrupted_data_in_listing"));
+        ProcessedFilesProvider producer = new ProcessedFilesProvider(getDirectoryPath("./corrupted_data_in_listing"));
         producer.readFilesInfo();
         //then exception is thrown (java.lang.IllegalStateException: cannot map key=value string into FileInfo)
     }

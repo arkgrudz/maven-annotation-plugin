@@ -50,6 +50,7 @@ import org.apache.maven.toolchain.Toolchain;
 import org.apache.maven.toolchain.ToolchainManager;
 import org.bsc.function.Consumer;
 import org.bsc.maven.plugin.processor.predicate.ProcessorPluginRunOracle;
+import org.codehaus.plexus.PlexusContainer;
 import org.codehaus.plexus.compiler.manager.CompilerManager;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.StringUtils;
@@ -557,7 +558,8 @@ public abstract class AbstractAnnotationProcessorMojo extends AbstractMojo
             files.addAll( FileUtils.getFiles(sourceDir, includesString, excludesString) );
         }
 
-        ProcessorPluginRunOracle processorPluginRunOracle = new ProcessorPluginRunOracle(projectBuildDirectory);
+        PlexusContainer plexusContainer = null;
+        ProcessorPluginRunOracle processorPluginRunOracle = new ProcessorPluginRunOracle(projectBuildDirectory, plexusContainer);
         if ( !processorPluginRunOracle.shouldRunProcessorPlugin(files)){
             getLog().info("processor plugin run predicate returned false - skipping plugin execution");
             return;
